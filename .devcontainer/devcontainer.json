@@ -7,12 +7,23 @@
 
 	"features": {
 		"ghcr.io/devcontainers/features/java:1": {
-			"version": "none",
-			"installMaven": "false",
-			"installGradle": "false"
+			"version": "21",
+			"jdkDistro": "ms",
+			"gradleVersion": "latest",
+			"mavenVersion": "latest",
+			"antVersion": "latest",
+			"groovyVersion": "latest"
 		},
-		"ghcr.io/devcontainers/features/desktop-lite:1": {},
-		"ghcr.io/bascodes/devcontainer-features/desktop-novnc:0": {}
+		"ghcr.io/devcontainers/features/desktop-lite:1": {
+			"version": "latest",
+			"noVncVersion": "1.6.0",
+			"password": "noPassword",
+			"webPort": "6080",
+			"vncPort": "5901"
+		},
+		"ghcr.io/bascodes/devcontainer-features/desktop-novnc:0": {
+			"version": "1.2.0"
+		}
 	}
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
