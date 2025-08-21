@@ -1,6 +1,9 @@
 {
   "name": "JavaGui",
-  "image": "mcr.microsoft.com/devcontainers/java:1-21-bullseye",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": "."
+  },
 
   "features": {
     "ghcr.io/devcontainers/features/java:1": {
@@ -10,23 +13,19 @@
       "mavenVersion": "latest",
       "antVersion": "latest",
       "groovyVersion": "latest"
-    },
-    "ghcr.io/devcontainers/features/desktop-lite:1": {
-      "version": "latest",
-      "noVncVersion": "1.6.0",
-      "password": "noPassword",
-      "webPort": "6080",
-      "vncPort": "5901"
-    },
-    "ghcr.io/bascodes/devcontainer-features/desktop-novnc:0": {
-      "version": "1.2.0"
     }
+    // "ghcr.io/devcontainers/features/desktop-lite:1": {
+    //   "version": "latest",
+    //   "noVncVersion": "1.6.0",
+    //   "password": "noPassword",
+    //   "webPort": "6080",
+    //   "vncPort": "5901"
+    // }
   },
 
   // open these ports from Codespaces -> forwarded ports
   "forwardPorts": [
     6080,
-    5901
   ],
 
   // helpful metadata so Codespaces/VS Code labels and opens the noVNC web UI automatically
@@ -35,19 +34,6 @@
       "label": "noVNC (web)",
       "onOpen": "openBrowser",
       "visibility": "public"
-    },
-    "5901": {
-      "label": "VNC (RFB)",
-      "visibility": "public"
     }
-  },
-
-  // run after the container starts: try to start VNC server and noVNC proxy with common commands
-  "postStartCommand": "bash -lc 'set -euo pipefail; echo \"[devcontainer] starting VNC/noVNC (if installed)\"; if pgrep -f \"x11vnc|vncserver|websockify|noVNC\" >/dev/null 2>&1; then echo \"[devcontainer] VNC/noVNC already running\"; else echo \"[devcontainer] attempting to start vncserver (if present)\"; if command -v vncserver >/dev/null 2>&1; then vncserver :1 -geometry 1280x800 || true; fi; echo \"[devcontainer] attempting x11vnc (if present)\"; if command -v x11vnc >/dev/null 2>&1; then nohup x11vnc -display :1 -forever -shared -rfbport 5901 > /tmp/x11vnc.log 2>&1 & fi; echo \"[devcontainer] attempting noVNC/websockify (if present)\"; if command -v websockify >/dev/null 2>&1 && [ -d /opt/noVNC ]; then nohup websockify --web /opt/noVNC 6080 localhost:5901 > /tmp/websockify.log 2>&1 & elif [ -f /opt/noVNC/utils/launch.sh ]; then nohup /opt/noVNC/utils/launch.sh --vnc localhost:5901 --listen 6080 > /tmp/novnc.launch.log 2>&1 & elif [ -f /usr/share/novnc/utils/launch.sh ]; then nohup /usr/share/novnc/utils/launch.sh --vnc localhost:5901 --listen 6080 > /tmp/novnc.launch.log 2>&1 & else echo \"[devcontainer] noVNC/websockify not found in common locations\"; fi; echo \"[devcontainer] done\"'",
-
-  // friendly post-create message
-  "postCreateCommand": "echo 'Dev container created — try opening port 6080 to view noVNC'",
-
-  // optional: run as the vscode user in the container
-  // "remoteUser": "vscode"
+  }
 }
