@@ -1,40 +1,53 @@
-// For format details, see https://aka.ms/devcontainer.json. For config options, see the
-// README at: https://github.com/devcontainers/templates/tree/main/src/java
 {
-	"name": "JavaGui",
-	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/java:1-21-bullseye",
+  "name": "JavaGui",
+  "image": "mcr.microsoft.com/devcontainers/java:1-21-bullseye",
 
-	"features": {
-		"ghcr.io/devcontainers/features/java:1": {
-			"version": "21",
-			"jdkDistro": "ms",
-			"gradleVersion": "latest",
-			"mavenVersion": "latest",
-			"antVersion": "latest",
-			"groovyVersion": "latest"
-		},
-		"ghcr.io/devcontainers/features/desktop-lite:1": {
-			"version": "latest",
-			"noVncVersion": "1.6.0",
-			"password": "noPassword",
-			"webPort": "6080",
-			"vncPort": "5901"
-		},
-		"ghcr.io/bascodes/devcontainer-features/desktop-novnc:0": {
-			"version": "1.2.0"
-		}
-	}
+  "features": {
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "21",
+      "jdkDistro": "ms",
+      "gradleVersion": "latest",
+      "mavenVersion": "latest",
+      "antVersion": "latest",
+      "groovyVersion": "latest"
+    },
+    "ghcr.io/devcontainers/features/desktop-lite:1": {
+      "version": "latest",
+      "noVncVersion": "1.6.0",
+      "password": "noPassword",
+      "webPort": "6080",
+      "vncPort": "5901"
+    },
+    "ghcr.io/bascodes/devcontainer-features/desktop-novnc:0": {
+      "version": "1.2.0"
+    }
+  },
 
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
+  // open these ports from Codespaces -> forwarded ports
+  "forwardPorts": [
+    6080,
+    5901
+  ],
 
-	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "java -version",
+  // helpful metadata so Codespaces/VS Code labels and opens the noVNC web UI automatically
+  "portsAttributes": {
+    "6080": {
+      "label": "noVNC (web)",
+      "onOpen": "openBrowser",
+      "visibility": "public"
+    },
+    "5901": {
+      "label": "VNC (RFB)",
+      "visibility": "public"
+    }
+  },
 
-	// Configure tool-specific properties.
-	// "customizations": {},
+  // run after the container starts: try to start VNC server and noVNC proxy with common commands
+  "postStartCommand": "bash -lc 'set -euo pipefail; echo \"[devcontainer] starting VNC/noVNC (if installed)\"; if pgrep -f \"x11vnc|vncserver|websockify|noVNC\" >/dev/null 2>&1; then echo \"[devcontainer] VNC/noVNC already running\"; else echo \"[devcontainer] attempting to start vncserver (if present)\"; if command -v vncserver >/dev/null 2>&1; then vncserver :1 -geometry 1280x800 || true; fi; echo \"[devcontainer] attempting x11vnc (if present)\"; if command -v x11vnc >/dev/null 2>&1; then nohup x11vnc -display :1 -forever -shared -rfbport 5901 > /tmp/x11vnc.log 2>&1 & fi; echo \"[devcontainer] attempting noVNC/websockify (if present)\"; if command -v websockify >/dev/null 2>&1 && [ -d /opt/noVNC ]; then nohup websockify --web /opt/noVNC 6080 localhost:5901 > /tmp/websockify.log 2>&1 & elif [ -f /opt/noVNC/utils/launch.sh ]; then nohup /opt/noVNC/utils/launch.sh --vnc localhost:5901 --listen 6080 > /tmp/novnc.launch.log 2>&1 & elif [ -f /usr/share/novnc/utils/launch.sh ]; then nohup /usr/share/novnc/utils/launch.sh --vnc localhost:5901 --listen 6080 > /tmp/novnc.launch.log 2>&1 & else echo \"[devcontainer] noVNC/websockify not found in common locations\"; fi; echo \"[devcontainer] done\"'",
 
-	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "root"
+  // friendly post-create message
+  "postCreateCommand": "echo 'Dev container created — try opening port 6080 to view noVNC'",
+
+  // optional: run as the vscode user in the container
+  // "remoteUser": "vscode"
 }
