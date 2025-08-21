@@ -23,17 +23,6 @@
     // }
   },
 
-  // open these ports from Codespaces -> forwarded ports
-  "forwardPorts": [
-    6080,
-  ],
-
-  // helpful metadata so Codespaces/VS Code labels and opens the noVNC web UI automatically
-  "portsAttributes": {
-    "6080": {
-      "label": "noVNC (web)",
-      "onOpen": "openBrowser",
-      "visibility": "public"
-    }
-  }
+  "forwardPorts": [6080],
+  "postStartCommand": "supervisord -c /etc/supervisor/conf.d/supervisord-novnc.conf"
 }
