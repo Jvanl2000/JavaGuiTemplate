@@ -25,5 +25,5 @@
       "onAutoForward": "ignore"
     }
   },
-  "postStartCommand": "supervisord -c /etc/supervisor/conf.d/supervisord-novnc.conf"
+  "postStartCommand": "supervisord -c /etc/supervisor/conf.d/supervisord-novnc.conf && export DISPLAY=:0"
 }
