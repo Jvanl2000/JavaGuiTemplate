@@ -24,6 +24,7 @@ public class Mandelbrot {
     }
 
     public static void main(String[] args)  {
+        stdlib.StdOut.println("Mandelbrot set");
         double xc   = Double.parseDouble(args[0]);
         double yc   = Double.parseDouble(args[1]);
         double size = Double.parseDouble(args[2]);
