@@ -26,4 +26,5 @@ EXPOSE 6080
 RUN mkdir -p /etc/supervisor/conf.d
 RUN mkdir -p /var/supervisor
 RUN chown -R vscode /var/supervisor
+RUN echo "export DISPLAY=:0" >> /home/vscode/.bashrc
 COPY supervisord-novnc.conf /etc/supervisor/conf.d/supervisord-novnc.conf
