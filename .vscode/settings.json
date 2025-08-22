@@ -20,4 +20,10 @@
   "java.project.referencedLibraries": [
     "/var/libs/stdlib.jar"
   ],
+
+  "files.exclude": {
+    "**/.github": true,
+    "**/.devcontainer": true,
+    "**/.vscode": true
+  }
 }
