@@ -1,1 +1,5 @@
-{}
+{
+    "java.project.referencedLibraries": [
+        "/var/libs/stdlib.jar"
+    ]
+}
