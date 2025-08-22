@@ -25,6 +25,13 @@ EXPOSE 6080
 # Add supervisor config to launch Xvfb, x11vnc, and noVNC proxy
 RUN mkdir -p /etc/supervisor/conf.d
 RUN mkdir -p /var/supervisor
+RUN mkdir -p /var/libs
+
 RUN chown -R vscode /var/supervisor
-RUN echo "export DISPLAY=:0" >> /home/vscode/.bashrc
+RUN chown -R vscode /var/libs
+
 COPY supervisord-novnc.conf /etc/supervisor/conf.d/supervisord-novnc.conf
+COPY stdlib.jar /var/libs/stdlib.jar
+
+RUN echo "export DISPLAY=:0" >> /home/vscode/.bashrc
+RUN echo "export CLASSPATH=/var/libs/stdlib.jar:." >> /home/vscode/.bashrc
