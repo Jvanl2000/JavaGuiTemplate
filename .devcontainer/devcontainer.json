@@ -6,6 +6,9 @@
   },
   "customizations": {
     "vscode": {
+      "extensions": [
+        "formulahendry.code-runner" 
+      ],
       "settings": {
         "github.copilot.enable": { "*": false },
         "github.copilot.editor.enableAutoCompletions": false,
@@ -42,7 +45,7 @@
   "forwardPorts": [6080],
   "portsAttributes": {
     "6080": {
-      "label": "noVNC",
+      "label": "Desktop",
       "onAutoForward": "openBrowser"
     },
     "otherPorts": {
