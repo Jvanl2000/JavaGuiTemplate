@@ -17,12 +17,6 @@
   "javascript.suggest.enabled": false,
   "typescript.suggest.enabled": false,
 
-  "files.exclude": {
-    "**/.github": true,
-    "**/.devcontainer": true,
-    "**/.vscode": true
-  },
-
   "java.project.referencedLibraries": [
     "/var/libs/stdlib.jar"
   ],
