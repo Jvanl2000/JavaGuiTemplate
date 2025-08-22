@@ -35,3 +35,5 @@ COPY stdlib.jar /var/libs/stdlib.jar
 
 RUN echo "export DISPLAY=:0" >> /home/vscode/.bashrc
 RUN echo "export CLASSPATH=/var/libs/stdlib.jar:." >> /home/vscode/.bashrc
+
+RUN code --uninstall-extension GitHub.copilot --disable-extensions --no-reload --force
