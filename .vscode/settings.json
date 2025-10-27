@@ -19,7 +19,7 @@
 
   "code-runner.runInTerminal": true,
   "code-runner.executorMap": {
-    "java": "cd $dir && javac $fileName && java $fileNameWithoutExt",
+    "java": "cd $dir && java $fileName",
   },
   
   "java.project.referencedLibraries": [
