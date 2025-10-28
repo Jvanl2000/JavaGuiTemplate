@@ -1,6 +1,4 @@
 # Java GUI Template
-## Description
-- This GitHub repository can be used to make graphical output while using GitHub Codespaces
 ## How To Use
 - STEP 1: In the top right of this repository, select `Use this template`, then click `Create a new repository`
 - STEP 2: Fill out the necessary information (ie, repository name, description, visibility)
