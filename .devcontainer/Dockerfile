@@ -1,5 +1,9 @@
 FROM mcr.microsoft.com/devcontainers/java:1-21-bullseye
 
+# Fix for expired Yarn GPG key
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor > /usr/share/keyrings/yarn-archive-keyring.gpg && \
+    echo "deb [signed-by=/usr/share/keyrings/yarn-archive-keyring.gpg] https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list
+
 # Install dependencies for noVNC + websockify
 RUN apt-get update && \
     apt-get install -y \
